@@ -17,35 +17,27 @@
             alert("Session will be come inactive after 1 minute of inactivity");
             document.cookie = "session=true"
         }
-
-        function logOut() {
-            console.log("Logged Out!")
-            document.cookie = "logOut=true"
-            <%
-                response.sendRedirect("index.jsp");
-            %>
-        }
-
-        let btn = document.getElementById("btn");
-        btn.addEventListener('click', () => {
-            logOut()
-        });
     </script>
 </head>
 <body onload="alertTimeOut()">
 <%
     //allow access only if session exists
     String user = null;
+    String role = null;
     System.out.println("HERE1");
     if(session.getAttribute("username") == null){
         System.out.println("HERE2");
         response.sendRedirect("index.jsp");
-    }else user = (String) session.getAttribute("username");
+    }else {
+        user = (String) session.getAttribute("username");
+        role = (String) session.getAttribute("profileRole");
+    }
 %>
-<h3>Hi <%=user %>, Admin login successful</h3>
+<h3>Hi <%=user %>, <%=role%> login successful</h3>
 User=<%=user %>
-<
-<%--<input type="button" id="btn">--%>
+<form action="LogOutServlet" method="GET">
+    <input type="submit" value="Logout">
+</form>
 <br>
 </body>
 </html>

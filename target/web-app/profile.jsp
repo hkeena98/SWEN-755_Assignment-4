@@ -23,20 +23,28 @@
 <%
     //allow access only if session exists
     String user = null;
+    String role = null;
+    int inactiveTime = 0;
     System.out.println("HERE1");
     if(session.getAttribute("username") == null){
         System.out.println("HERE2");
         response.sendRedirect("index.jsp");
-    }else user = (String) session.getAttribute("username");
+    }else {
+        user = (String) session.getAttribute("username");
+        role = (String) session.getAttribute("profileRole");
+        inactiveTime = session.getMaxInactiveInterval();
+    }
 %>
-<h3>Hi <%=user %>, Faculty login successful</h3>
-<br>
+<h3>Hi <%=user %>, <%=role%> login successful</h3>
+<p>Max inactive interval <%=inactiveTime%></p>
 User=<%=user %>
+<form action="LogOutServlet" method="GET">
+    <input type="submit" value="Logout">
+</form>
+<form action="ProfileServlet" method="GET">
+    <input type="submit" value="Increment Session Logout Time(30s)">
+</form>
 <br>
 </body>
 </html>
 </html>
-<%!
-    private void alert() {
-    }
-%>
